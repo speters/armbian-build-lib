@@ -52,9 +52,6 @@ if [[ -z $ver1 || $ver1 -lt $ver2 ]]; then
 	read
 fi
 
-# clean unfinished DEB packing
-rm -rf $DEST/debs/*/*/
-
 # Script parameters handling
 for i in "$@"; do
 	if [[ $i == *=* ]]; then
@@ -240,8 +237,9 @@ fi
 
 [[ -n $RELEASE ]] && create_board_package
 
+# chroot-build-ackages
 [[ $KERNEL_ONLY == yes && ($RELEASE == jessie || $RELEASE == xenial) && \
-	$EXPERIMENTAL_BUILDPKG == yes && $(lsb_release -sc) == xenial ]] && chroot_build_packages
+	$EXTERNAL_NEW == yes && $(lsb_release -sc) == xenial ]] && chroot_build_packages
 
 if [[ $KERNEL_ONLY != yes ]]; then
 	if [[ $EXTENDED_DEBOOTSTRAP != no ]]; then
